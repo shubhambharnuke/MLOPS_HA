@@ -1,0 +1,12 @@
+{
+    "total_records": 200,
+    "valid_records": 198,
+    "null_counts": {
+        "CustomerID": 0,
+        "Age": 1,
+        "MonthlySpend": 1,
+        "SupportCalls": 0,
+        "Churn": 0
+    },
+    "status": "PASSED"
+}

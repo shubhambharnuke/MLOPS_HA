@@ -1,0 +1,13 @@
+==================================================
+        M L O p s   P I P E L I N E   E X E C U T I O N   R E P O R T
+==================================================
+Execution Timestamp : 2026-11-20 01:19:29
+Workflow Orchestrator: Apache Airflow (data_pipeline_dag)
+Status               : SUCCESS (All 5 Tasks Completed)
+--------------------------------------------------
+Total Records Processed : 200
+Average Customer Age    : 43.4 years
+Average Monthly Spend   : $260.39
+Customer Churn Rate     : 23.5%
+Output Processed File   : A4/output/processed_data.csv
+==================================================
