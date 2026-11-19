@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and temporary files
+.pytest_cache/
+.ipynb_checkpoints/
+*.tmp
+*.log
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE / Editor clutter
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# DVC local storage & cache
+.dvc/cache/
+.dvc/tmp/
+A1/storage/
