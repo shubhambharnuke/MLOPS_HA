@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  ml_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ml_prediction_api
+    ports:
+      - "8000:8000"
+    networks:
+      - monitoring_net
+
+  prometheus:
+    image: prom/prometheus:v2.50.0
+    container_name: prometheus_service
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring_net
+
+  grafana:
+    image: grafana/grafana:10.3.3
+    container_name: grafana_service
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring_net
+    depends_on:
+      - prometheus
+
+networks:
+  monitoring_net:
+    driver: bridge
