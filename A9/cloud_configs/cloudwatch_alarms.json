@@ -1,0 +1,66 @@
+{
+  "Alarms": [
+    {
+      "AlarmName": "SageMaker-Endpoint-High-Latency",
+      "AlarmDescription": "Triggers when model inference p95 latency exceeds 200 milliseconds over two consecutive 1-minute periods.",
+      "Namespace": "AWS/SageMaker",
+      "MetricName": "ModelLatency",
+      "Dimensions": [
+        { "Name": "EndpointName", "Value": "sagemaker-cancer-rf-endpoint" },
+        { "Name": "VariantName", "Value": "AllTraffic" }
+      ],
+      "Statistic": "Average",
+      "ExtendedStatistic": "p95",
+      "Period": 60,
+      "EvaluationPeriods": 2,
+      "Threshold": 200000,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching"
+    },
+    {
+      "AlarmName": "SageMaker-Endpoint-4XX-Invocation-Errors",
+      "AlarmDescription": "Triggers when client error rate exceeds 5 errors in a 5-minute evaluation period.",
+      "Namespace": "AWS/SageMaker",
+      "MetricName": "Invocation4XXErrors",
+      "Dimensions": [
+        { "Name": "EndpointName", "Value": "sagemaker-cancer-rf-endpoint" }
+      ],
+      "Statistic": "Sum",
+      "Period": 300,
+      "EvaluationPeriods": 1,
+      "Threshold": 5,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "notBreaching"
+    },
+    {
+      "AlarmName": "SageMaker-Endpoint-5XX-Invocation-Errors",
+      "AlarmDescription": "Critical: Triggers immediately when SageMaker backend raises any 5XX server failure.",
+      "Namespace": "AWS/SageMaker",
+      "MetricName": "Invocation5XXErrors",
+      "Dimensions": [
+        { "Name": "EndpointName", "Value": "sagemaker-cancer-rf-endpoint" }
+      ],
+      "Statistic": "Sum",
+      "Period": 60,
+      "EvaluationPeriods": 1,
+      "Threshold": 1,
+      "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+      "TreatMissingData": "breaching"
+    },
+    {
+      "AlarmName": "SageMaker-Endpoint-CPU-High-Utilization",
+      "AlarmDescription": "Triggers auto-scaling evaluation when endpoint CPU utilization exceeds 75% for 3 consecutive periods.",
+      "Namespace": "/aws/sagemaker/Endpoints",
+      "MetricName": "CPUUtilization",
+      "Dimensions": [
+        { "Name": "EndpointName", "Value": "sagemaker-cancer-rf-endpoint" }
+      ],
+      "Statistic": "Average",
+      "Period": 60,
+      "EvaluationPeriods": 3,
+      "Threshold": 75.0,
+      "ComparisonOperator": "GreaterThanThreshold",
+      "TreatMissingData": "missing"
+    }
+  ]
+}

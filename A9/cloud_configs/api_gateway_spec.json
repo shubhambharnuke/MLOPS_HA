@@ -1,0 +1,99 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MLOps SageMaker Prediction Proxy API",
+    "description": "Serverless REST API Gateway exposing AWS Lambda integration to invoke AWS SageMaker breast cancer diagnostic endpoint.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/predict": {
+      "post": {
+        "summary": "Real-time diagnostic prediction",
+        "description": "Receives 30 numerical diagnostic features and proxies request to SageMaker real-time inference endpoint via Lambda.",
+        "operationId": "PredictCancerDiagnosis",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["features"],
+                "properties": {
+                  "features": {
+                    "type": "array",
+                    "items": { "type": "number" },
+                    "minItems": 30,
+                    "maxItems": 30,
+                    "example": [
+                      17.99, 10.38, 122.8, 1001.0, 0.1184, 0.2776, 0.3001, 0.1471, 0.2419, 0.07871,
+                      1.095, 0.9053, 8.589, 153.4, 0.006399, 0.04904, 0.05373, 0.01587, 0.03003, 0.006193,
+                      25.38, 17.33, 184.6, 2019.0, 0.1622, 0.6656, 0.7119, 0.2654, 0.4601, 0.1189
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful diagnostic prediction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prediction": { "type": "integer", "enum": [0, 1] },
+                    "diagnosis": { "type": "string", "enum": ["Malignant", "Benign"] },
+                    "confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                    "probabilities": {
+                      "type": "object",
+                      "properties": {
+                        "malignant": { "type": "number" },
+                        "benign": { "type": "number" }
+                      }
+                    },
+                    "endpoint_name": { "type": "string" },
+                    "timestamp": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input feature payload or dimension mismatch",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error invoking SageMaker endpoint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:123456789012:function:sagemaker-cancer-predict-proxy/invocations",
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "type": "aws_proxy"
+        }
+      }
+    }
+  }
+}
