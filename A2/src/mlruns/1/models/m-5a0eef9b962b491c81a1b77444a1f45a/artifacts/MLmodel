@@ -1,0 +1,26 @@
+artifact_path: file:D:/SHUBHAM/VIT_ACADEMICS/TY/mlops/final_submissions/a2/src/mlruns/1/models/m-5a0eef9b962b491c81a1b77444a1f45a/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.12.10
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types:
+    - sklearn.tree._tree.Tree
+    - numpy.dtype
+    - numpy.core.multiarray.scalar
+mlflow_version: 3.16.1
+model_id: m-5a0eef9b962b491c81a1b77444a1f45a
+model_size_bytes: 17482
+model_uuid: m-5a0eef9b962b491c81a1b77444a1f45a
+prompts: null
+run_id: 45f7e95a6d164bcf8ef94d9bdadf9f34
+utc_time_created: '2026-11-20 11:48:00.760733'
