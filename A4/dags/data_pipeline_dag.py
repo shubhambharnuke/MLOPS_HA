@@ -145,7 +145,7 @@ try:
         'data_pipeline_dag',
         default_args=default_args,
         description='End-to-End Automated MLOps Data Pipeline DAG',
-        schedule_interval='@daily',
+        schedule='@daily',
         catchup=False
     )
 

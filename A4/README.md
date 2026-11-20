@@ -52,7 +52,31 @@ A4/
 ---
 
 ## 4. Execution Instructions
+
+### A. Standalone DAG Verification Runner (Local PowerShell)
+Run the pipeline directly through Python to execute all 5 tasks sequentially and generate outputs:
 ```bash
-# Execute standalone DAG verification runner
 python A4/dags/data_pipeline_dag.py
 ```
+
+### B. Launching & Viewing the Apache Airflow Web Dashboard (WSL2)
+Because Apache Airflow requires a POSIX environment, it runs in WSL2 (Ubuntu). Note: Port 8088 is configured to avoid conflicts with other Docker services on port 8080.
+
+1. **Verify or Start Airflow Standalone:**
+   ```bash
+   wsl -d Ubuntu
+   export PATH="/home/arp10/airflow_env/bin:$PATH"
+   export AIRFLOW_HOME="/home/arp10/airflow"
+   export AIRFLOW__API_SERVER__PORT="8088"
+   export AIRFLOW__WEBSERVER__WEB_SERVER_PORT="8088"
+   airflow standalone
+   ```
+
+2. **Access the Dashboard:**
+   - **URL:** [http://localhost:8088](http://localhost:8088)
+   - **Username:** `admin`
+   - **Password:** `mp66gqwWw3G5vrb2` (stored in `/home/arp10/airflow/simple_auth_manager_passwords.json.generated`)
+
+3. **In the Web UI:**
+   - Locate **`data_pipeline_dag`** in the DAGs list.
+   - Click the DAG to open the **Graph View** or **Grid View** to observe the sequential task dependency execution: `extract >> validate >> process >> report >> notify`.
